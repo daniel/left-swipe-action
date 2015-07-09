@@ -182,7 +182,13 @@ CSS for both the main content and buttons in light DOM will be just applied.
             type: Boolean,
             value: false,
             observer: 'disabledChanged'
-          }
+          },
+          /**
+           * FIXME
+          */
+          onswipe: {
+            type: String
+          }          
         },
 
         disabledChanged: function(oldValue, newValue){
@@ -252,6 +258,14 @@ CSS for both the main content and buttons in light DOM will be just applied.
             this.applyClass();
             // apply css fixed-true before transition
             this.async(this.transition);
+            this.async(this.callSwipeAction, 500); // transition time is 0.5s
+        },
+
+        callSwipeAction: function() {
+          console.log("callSwipeAction");
+          if (this.open && this.onswipe) {
+            eval(this.onswipe);
+          }          
         },
 
         transition: function(){
