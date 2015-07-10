@@ -1,5 +1,5 @@
 {
-  "name": "left-swipe-action",
+  "name": "swipe-list-item",
   "version": "0.2.1",
   "authors": [
     "tejitak"
@@ -10,7 +10,7 @@
     "web-components"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/tejitak/left-swipe-action",
+  "homepage": "https://github.com/daniel/swipe-list-item",
   "dependencies": {
     "polymer": "~1.0.2"
   },
