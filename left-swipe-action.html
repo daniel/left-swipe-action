@@ -39,6 +39,7 @@ CSS for both the main content and buttons in light DOM will be just applied.
             display: -ms-flexbox;
             display: -webkit-flex;
             display: flex;
+            opacity: 0.2;
 
             -ms-flex-direction: row;
             -webkit-flex-direction: row;
@@ -46,6 +47,16 @@ CSS for both the main content and buttons in light DOM will be just applied.
             -ms-flex-direction: row-reverse;
             -webkit-flex-direction: row-reverse;
             flex-direction: row-reverse;
+            
+            -webkit-transition: opacity 0.5s;
+            -moz-transition: opacity 0.5s;
+            -ms-transition: opacity 0.5s;
+            -o-transition: opacity 0.5s;
+            transition: opacity 0.5s;            
+        }
+
+        .swipe-underlay-active {
+          opacity: 1;
         }
 
         .swipe-content {
@@ -188,6 +199,10 @@ CSS for both the main content and buttons in light DOM will be just applied.
           */
           onswipe: {
             type: String
+          },
+          background: {
+            type: String,
+            default: 'red'
           }          
         },
 
@@ -235,6 +250,8 @@ CSS for both the main content and buttons in light DOM will be just applied.
             this.transition();
             // allow y scroll on this node but prevent x scroll
             this.setScrollDirection('y');
+            this.underlay = this.getElementsByClassName('swipe-underlay')[0];
+            this.underlay.style.background = this.background;
         },
 
         onDown: function(e){
@@ -246,30 +263,43 @@ CSS for both the main content and buttons in light DOM will be just applied.
             var p = this.point;
             if(p){
                 p.update(e.detail.x);
-                this.translate3d(this.open ? this.offset - this.$.content.clientWidth + p.distance() + "px" : p.distance() + "px", 0, 0, this.$.content);
+                this.translate3d(this.open ? this.offset - this.$.content.clientWidth + p.distance() + "px" : p.distance() + "px", 0, 0, this.$.content);                
+                if (this.swipedFarEnough(p)) {
+                  console.log("swipedFarEnough");
+                  // this.underlay.style.opacity = '1';
+                  this.underlay.classList.add('swipe-underlay-active');
+                } else {
+                  // this.underlay.style.opacity = '0.2';
+                  this.underlay.classList.remove('swipe-underlay-active');
+                }
             }
         },
 
         onUp: function(e){
             var p = this.point;
             if(!p){ return; }
-            this.open = p && p.isFlick();
+            this.open = p && (p.isFlick() || this.swipedFarEnough(p));
             this.point = null;
             this.applyClass();
             // apply css fixed-true before transition
             this.async(this.transition);
             this.async(this.callSwipeAction, 500); // transition time is 0.5s
         },
+        
+        swipedFarEnough: function(p) {
+          return p.distance()*-1 > this.offsetWidth * 0.2; // FIXME: Make the number a property          
+        },
 
         callSwipeAction: function() {
           console.log("callSwipeAction");
           if (this.open && this.onswipe) {
-            eval(this.onswipe);
+            new Function(this.onswipe)() // FIXME: is this safe?
           }          
         },
 
         transition: function(){
             this.translate3d(this.open ? this.offset - this.$.content.clientWidth + "px": 0, 0, 0, this.$.content);
+            // var button = this.getElementsByTagName("left-swipe-action-button");
         },
 
         toggleOpen: function(){
