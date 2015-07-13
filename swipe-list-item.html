@@ -17,11 +17,15 @@
             display: -ms-flexbox;
             display: -webkit-flex;
             display: flex;
-            opacity: 0.2;
+            
+            /*FIXME--------------------*/
+            /*opacity: 0.2;*/
+            z-index: 10;
+            transform: translateX(99%);
 
-            -ms-flex-direction: row;
+            /*-ms-flex-direction: row;
             -webkit-flex-direction: row;
-            flex-direction: row;
+            flex-direction: row;*/
             -ms-flex-direction: row-reverse;
             -webkit-flex-direction: row-reverse;
             flex-direction: row-reverse;
@@ -68,7 +72,7 @@
     </style>
     <template>
         <div class="swipe-underlay">
-            <content select="swipe-list-item-action"></content>
+            <content select="swipe-list-item-action-left"></content>
         </div>
         <div id="content" on-track="handleTrack" on-down="handleDown" on-up="handleUp">
             <content></content>

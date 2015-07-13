@@ -1,7 +1,7 @@
 <!--
 FIXME
 -->
-<dom-module id="swipe-list-item-action">
+<dom-module id="swipe-list-item-action-left">
     <style>
         :host {
             display: table;
@@ -9,7 +9,7 @@ FIXME
             padding: 0 20px;
         }
 
-        .action-button-wrapper {
+        .action-wrapper {
             display: table-cell;
             vertical-align: middle;
             font-size: 1.8rem;
@@ -17,11 +17,11 @@ FIXME
         }
     </style>
     <template>
-        <div class="action-button-wrapper">
+        <div class="action-wrapper">
             <content></content>
         </div>
     </template>
 </dom-module>
 <script>
-    Polymer({is: "swipe-list-item-action"});
+    Polymer({is: "swipe-list-item-action-left"});
 </script>

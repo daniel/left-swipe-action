@@ -132,11 +132,12 @@
     <div id="basic">
         <h3>Demo</h3>
         <div>
-            <swipe-list-item onswipe="alert('swiped')" id="underlay_background" background="rgb(249, 95, 50)">
+            <swipe-list-item onswipe="alert('swiped')" background="yellow">
                 <div style="padding: 18px; color: #101010;">
                     <p>FIXME: How to use<br><strong>Swipe me to left</strong></p>
                 </div>
-                <swipe-list-item-action action="alert('delete')">Delete</swipe-list-item-action>
+                <swipe-list-item-action-left background="red" on-selected="alert('delete')">Delete</swipe-list-item-action-left>
+                <swipe-list-item-action-right direction="right" background="green" on-selected="alert('archive')">Archive</swipe-list-item-action-right>
             </swipe-list-item>
         </div>
     </div>
